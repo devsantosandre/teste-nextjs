@@ -1,12 +1,5 @@
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import { HomeScreen } from "@/features/screens/Home";
 
 export default function Home() {
-  return (
-    <>
-      <h1>Hello Word!</h1>
-    </>
-  )
+  return <HomeScreen />;
 }

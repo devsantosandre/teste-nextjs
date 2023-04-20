@@ -6,6 +6,52 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --background-start-rgb: 229,229,229;
   --background-end-rgb: 255, 255, 255;
+  background-color: rgb(var(--background-start-rgb));
 }
+
+p {
+  margin: 4px 0;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  }
+  
+  div .pagination-container > li > span {
+  border: 1.2px solid #c4c4c4;
+  padding: 5px 12px;
+  color: #c4c4c4;
+  margin-left: -1px;
+  cursor: pointer;
+  }
+  
+  div .pagination-container > li > span.disabled {
+  cursor: not-allowed;
+  }
+  
+  div .pagination-container > li > span:hover {
+  color: #000;
+  }
+  
+  div .pagination-container > li > span.previous-pagination {
+  border-radius: 4px 0 0 4px;
+  color: #000;
+  }
+  
+  div .pagination-container > li > span.next-pagination {
+  border-radius: 0px 4px 4px 0;
+  color: #000;
+  }
+  
+  .pagination-container > li.active > span {
+  color: #B3140C;
+  }
+  
+  .pagination-container > li.active > span:hover {
+  color: #D8231B;
+  }
