@@ -1,40 +1,44 @@
 // import { UserData } from "../interfaces/user";
 
 interface InitState {
-  search: null
-  services: any[]
-  details: any
+  search: null;
+  searchUrl: null;
+  viewHome: "grid" | "list";
 }
 
 export const initialState: InitState = {
   search: null,
-  services: [],
-  details: {},
+  searchUrl: null,
+  viewHome: "grid",
 };
 
 export const actionTypes = {
   SET_SEARCH: "SET_SEARCH",
-  SET_SERVICES: "SET_SERVICES",
-  SET_SERVICE_DETAILS: "SET_SERVICE_DETAILS",
+  SET_VIEW_HOME: "SET_VIEW_HOME",
+  SET_SEARCH_URL: "SET_SEARCH_URL",
 };
 
-const reducer = (state: any, action: { type: any; search: any; services: any; details: any; }) => {
+const reducer = (
+  state: any,
+  action: { type: string; search: string; searchUrl: string; viewHome: string }
+) => {
   switch (action.type) {
     case actionTypes.SET_SEARCH:
       return {
         ...state,
-        search: action.search
-      }
-    case actionTypes.SET_SERVICES:
+        search: action.search,
+      };
+    case actionTypes.SET_SEARCH_URL:
       return {
         ...state,
-        services: action.services
-      }
-    case actionTypes.SET_SERVICE_DETAILS:
+        searchUrl: action.searchUrl,
+      };
+    case actionTypes.SET_VIEW_HOME:
       return {
         ...state,
-        details: action.details
-      }
+        viewHome: action.viewHome,
+      };
+
     default:
       return state;
   }

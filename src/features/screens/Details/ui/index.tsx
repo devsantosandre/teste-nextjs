@@ -7,29 +7,34 @@ import {
   CardContent,
   Typography,
   Divider,
+  Skeleton,
 } from "@mui/material";
+import { useQuery } from "react-query";
 import { BsGrid, BsList, BsFilter, BsArrowLeft } from "react-icons/bs";
 import { SearchField } from "@/components/SearchField";
 import { CustomTable, TableColumn } from "@/components/Table";
 import { useStateValue } from "@/providers/StateProvider";
 import Pagination from "@/components/Pagination";
 import { useRouter } from "next/router";
-import { useSearch } from "../..";
+import { useSearch } from "../../../screens/hook";
+import { useFetchsSearch } from "../..";
+import { useFetchsDetails } from "../hook";
 
 export const DetailsContainer = () => {
-  const [{ search, details }, dispatch] = useStateValue();
+  const [{ search }] = useStateValue();
   const router = useRouter();
+  const { id: slug } = router.query;
 
-  const { handleOnSearch, hangleOnGetSearch } = useSearch();
+  //Hooks
+  const { handleChangeOnSearch } = useSearch();
+  const { getDetails } = useFetchsDetails();
+  const { getServices } = useFetchsSearch();
 
-  // component transform string to jsx
-  const transformStringToJsx = (string: string) => {
-    <div
-      dangerouslySetInnerHTML={{
-        __html: string,
-      }}
-    />;
-  };
+  const { data, isLoading } = useQuery(["datails", slug], () => getDetails(
+    slug as string
+  ));
+
+  const details = data?.results[0];
 
   return (
     <Container
@@ -49,8 +54,11 @@ export const DetailsContainer = () => {
         </Box>
         <SearchField
           placeholder="Pesquisar"
-          onChange={handleOnSearch}
-          onClick={() => hangleOnGetSearch()}
+          onChange={handleChangeOnSearch}
+          onClick={() => {
+            getServices({ page: 1 } as any);
+            router.push(`/search/?search=${search}`);
+          }}
           value={search}
         />
       </Box>
@@ -74,7 +82,14 @@ export const DetailsContainer = () => {
         </Box>
       </Box>
       <Box mb={10}>
-        {details ? (
+        {isLoading ? (
+          <>
+            <Skeleton
+              variant="rectangular"
+              height={10000}
+            />
+          </>
+        ) : details ? (
           <Card sx={{ minWidth: 275, position: "relative" }}>
             <CardContent>
               <Typography
@@ -187,7 +202,7 @@ export const DetailsContainer = () => {
             </CardContent>
           </Card>
         ) : (
-          <h1>Carregando...</h1>
+          <h1>Não há dados para exibir</h1>
         )}
       </Box>
     </Container>

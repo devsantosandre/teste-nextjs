@@ -5,6 +5,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { Roboto } from 'next/font/google'
+import { QueryClientProvider, QueryClient } from "react-query";
+import { queryClient } from "@/services/queryClient";
 
 const roboto = Roboto({
   weight: '400',
@@ -22,7 +24,9 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <main className={` ${roboto.className} ${styles.main}`}>
         <StateProvider initialState={initialState} reducer={reducer}>
+          <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
+          </QueryClientProvider>
         </StateProvider>
       </main>
     </>

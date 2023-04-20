@@ -35,8 +35,11 @@ const Pagination: React.FC<PaginationProps> = (props: PaginationProps) => {
   const onPrevious = () => {
     if (currentPage !== 1) onPageChange(currentPage - 1);
   };
+  
   return (
-    <ul className="pagination-container">
+    <ul className="pagination-container" style={{
+      listStyleType: 'none',
+    }}>
       <li className={currentPage === 1 ? 'disabled' : ''}>
         <span
           aria-label="Previous"

@@ -1,195 +1,50 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState, useEffect, useRef } from "react";
-import {
-  Box,
-  Container,
-  Rating,
-  Grid,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Grow,
-} from "@mui/material";
+import { useRef, SetStateAction } from "react";
+import { Box, Container, Rating, Grid, Grow } from "@mui/material";
 import { SearchField } from "@/components/SearchField";
-import { CustomTable, TableColumn } from "@/components/Table";
-import { useStateValue } from "@/providers/StateProvider";
+import { CustomTable } from "@/components/Table";
 import Pagination from "@/components/Pagination";
 import { useRouter } from "next/router";
-import { useSearch } from "../..";
 import { BsGrid, BsList, BsFilter } from "react-icons/bs";
 import { Select } from "@/components/Select";
+import { SelectView } from "../components/SelectView";
+import { SkeletonView } from "../components/SkeletonView";
+import { columnsService } from "./table";
+import { useStateValue } from "@/providers/StateProvider";
 
-export interface columnsGeneralColletionDetails {
-  id: number;
-  orgao_nome: string;
-  publico_especifico: string;
-  orgao_nome: string;
-  total_avaliacao: string;
-  updated_at: string;
+interface SearchContainerProps {
+  isLoading: boolean;
+  newServices: any;
+  setNewServices: React.Dispatch<SetStateAction<any>>;
+  openFilter: boolean;
+  setOpenFilter: (value: boolean) => void;
+  handleOrder: (order: "ASC" | "DESC") => Promise<void>;
+  handleOrderRating: (order: "ASC" | "DESC") => Promise<void>;
+  handleOrderUpdate: (order: "ASC" | "DESC") => Promise<void>;
+  handleChangeOnSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  refetch: () => void;
+  search: string;
 }
 
-export const columnsGeneralColletionDetails: TableColumn<columnsGeneralColletionDetails>[] =
-  [
-    {
-      name: "Nome do serviço",
-      selector: (row) => row.orgao_nome,
-    },
-    {
-      name: "Públicos específicos",
-      selector: (row) => (
-        <Box
-          sx={{
-            backgroundColor: "#F2F2F2",
-            borderRadius: "5px",
-            padding: "5px",
-          }}
-        >
-          {row.publico_especifico}
-        </Box>
-      ),
-    },
-    {
-      name: "Nome do órgão",
-      selector: (row) => row.orgao_nome,
-    },
-    {
-      name: "Total de avaliação",
-      selector: (row) => (
-        <Rating name="read-only" value={+row.total_avaliacao} readOnly />
-      ),
-    },
-    {
-      name: "Última atualização",
-      selector: (row) => new Date(row.updated_at).toLocaleDateString(),
-    },
-  ];
-
-export interface HomeContainerProps {
-  onSearch: () => void;
-  onGetSearch: () => void;
-}
-
-export const SearchContainer = () => {
-  const [{ search, services }] = useStateValue();
+export const SearchContainer = ({
+  isLoading,
+  newServices,
+  setNewServices,
+  openFilter,
+  setOpenFilter,
+  handleOrder,
+  handleOrderRating,
+  handleOrderUpdate,
+  handleChangeOnSearch,
+  refetch,
+  search,
+}: SearchContainerProps) => {
   const router = useRouter();
-
-  const [newServices, setNewServices] = useState<any[]>([]);
-
-  const [view, setView] = useState<"list" | "grid">("grid");
-  const [openFilter, setOpenFilter] = useState<boolean>(false);
-
-  const { handleOnSearch, hangleOnGetSearch } = useSearch();
-
-  //ref selects
+  const [{ viewHome: view }, dispatch] = useStateValue();
+  //Refs
   const alphabeticalFilterRef = useRef<HTMLDivElement>(null);
   const ratingFilterRef = useRef<HTMLDivElement>(null);
   const lastUpdateFilterRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setNewServices(services?.results || []);
-  }, [services, search]);
-
-  useEffect(() => {
-    console.log("Mudando o Estado :>> ", newServices);
-  }, [newServices]);
-
-  // componente de select para escolha da visualização
-  const SelectView = () => (
-    <Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          mb: 3,
-          mt: 6,
-        }}
-      >
-        Exibição em:
-        <Box
-          onClick={() => setView("grid")}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            ml: 2,
-            mr: 1,
-            backgroundColor: view === "grid" ? "#e0e0e0" : "#fff",
-            p: 1,
-            borderRadius: 3,
-            cursor: "pointer",
-            transition: "all 0.2s ease-in-out",
-            "&:hover": {
-              backgroundColor: "#f5f5f5",
-            },
-          }}
-        >
-          <BsGrid title="Visualização em grade" style={{ marginRight: 5 }} />
-          Grade
-        </Box>
-        <Box
-          onClick={() => setView("list")}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: view === "list" ? "#e0e0e0" : "#fff",
-            p: 1,
-            borderRadius: 3,
-            cursor: "pointer",
-            transition: "all 0.2s ease-in-out",
-            "&:hover": {
-              backgroundColor: "#f5f5f5",
-            },
-          }}
-        >
-          <BsList title="Visualização em lista" style={{ marginRight: 5 }} />
-          Lista
-        </Box>
-      </Box>
-    </Box>
-  );
-
-  //funcção que ordena os serviços por ordem de A-Z ou Z-A
-  const handleOrder = async (order: "ASC" | "DESC") => {
-    const sortServices = await newServices.sort((a, b) => {
-      if (order === "ASC") {
-        return a.orgao_nome.localeCompare(b.orgao_nome);
-      } else {
-        return b.orgao_nome.localeCompare(a.orgao_nome);
-      }
-    });
-    return setNewServices(sortServices);
-  };
-
-  //função que ordena por ordem de avaliação
-  const handleOrderRating = async (order: "ASC" | "DESC") => {
-    setNewServices([]);
-    const sortServices = await newServices.sort((a, b) => {
-      if (order === "DESC") {
-        return +a.total_avaliacao - +b.total_avaliacao;
-      } else {
-        return +b.total_avaliacao - +a.total_avaliacao;
-      }
-    });
-    return setNewServices(sortServices);
-  };
-
-  //função que ordena por ordem de atualização
-  const handleOrderUpdate = async (order: "ASC" | "DESC") => {
-    const sortServices = await newServices.sort((a, b) => {
-      if (order === "ASC") {
-        return (
-          new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
-        );
-      } else {
-        return (
-          new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-        );
-      }
-    });
-    return setNewServices(sortServices);
-  };
-
   return (
     <Container
       sx={{
@@ -208,10 +63,15 @@ export const SearchContainer = () => {
         </Box>
         <SearchField
           placeholder="Pesquisar"
-          onChange={handleOnSearch}
+          onChange={handleChangeOnSearch}
           onClick={() => {
+            refetch();
             setOpenFilter(false);
-            hangleOnGetSearch();
+            dispatch({
+              type: "SET_SEARCH_URL",
+              searchUrl: search,
+            });
+            router.push(`/search/?search=${search}`);
           }}
           value={search}
         />
@@ -240,6 +100,7 @@ export const SearchContainer = () => {
         </Box>
       </Box>
 
+      {/* // filtros */}
       <Box
         sx={{
           display: "flex",
@@ -303,94 +164,145 @@ export const SearchContainer = () => {
           </Grow>
         ) : null}
       </Box>
-      <SelectView />
-      {/* // grid para exibição dos serviços em forma de cards */}
-      {view === "grid" && (
+
+      {/* Seleção de exibição */}
+      <Box sx={{ mt: 5 }}>
+        <SelectView
+          options={[
+            {
+              label: "Lista",
+              icon: <BsList />,
+              action: () => {
+                dispatch({
+                  type: "SET_VIEW_HOME",
+                  viewHome: "list",
+                });
+              },
+              active: view === "list",
+            },
+            {
+              label: "Grade",
+              icon: <BsGrid />,
+              action: () => {
+                dispatch({
+                  type: "SET_VIEW_HOME",
+                  viewHome: "grid",
+                });
+              },
+              active: view === "grid",
+            },
+          ]}
+        />
+      </Box>
+
+      {/* // exibição do loading */}
+      {isLoading ? <SkeletonView view={view} /> : null}
+      {isLoading || newServices?.length > 0 ? (
+        <>
+          {/* // exibição dos serviços em forma de grid */}
+          {view === "grid" && (
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gridGap: 10,
+              }}
+            >
+              {newServices?.map((service: any) => (
+                <Box
+                  key={service.id}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    p: 2,
+                    boxShadow: 1,
+                    borderRadius: 3,
+                    cursor: "pointer",
+                    backgroundColor: "#FFF",
+
+                    "&:hover": {
+                      backgroundColor: "#f5f5f5",
+                    },
+                  }}
+                  onClick={() => router.push(`/details/${service.slug}`)}
+                >
+                  {/* exibição do nome do serviço, público específico, nome do órgão e ultima atualização */}
+                  <p>
+                    <strong>{service.orgao_nome}</strong>
+                  </p>
+                  <p
+                    style={{
+                      fontSize: 12,
+                      color: "#9e9e9e",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {service.publico_especifico}
+                  </p>
+                  <p>{service.orgao_nome}</p>
+                  <p
+                    style={{
+                      fontSize: 12,
+                      color: "#9e9e9e",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    {new Date(service.updated_at).toLocaleDateString()}
+                  </p>
+
+                  {/* exibição da avaliação do serviço */}
+                  <Box sx={{ mt: 1 }}>
+                    <Rating
+                      name="read-only"
+                      value={+service.total_avaliacao}
+                      readOnly
+                    />
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          )}
+
+          {/* // exibição dos serviços em forma de tabela */}
+          {view === "list" && (
+            <CustomTable
+              theme="primary"
+              numberRowsPerPage={0}
+              progressPending={false}
+              columns={columnsService}
+              data={newServices}
+              getRowId={(e) => {
+                router.push(`/details/${e.slug}`);
+              }}
+            />
+          )}
+        </>
+      ) : (
+        // informaando que não foi encontrado nenhum serviço
         <Box
           sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gridGap: 10,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            mt: 5,
           }}
         >
-          {newServices?.map((service) => (
-            <Box
-              key={service.id}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                p: 2,
-                boxShadow: 1,
-                borderRadius: 3,
-                cursor: "pointer",
-                backgroundColor: "#FFF",
-
-                "&:hover": {
-                  backgroundColor: "#f5f5f5",
-                },
-              }}
-              onClick={() => router.push(`/details/${service.slug}`)}
-            >
-              {/* exibição do nome do serviço, público específico, nome do órgão e ultima atualização */}
-              <p>
-                <strong>{service.orgao_nome}</strong>
-              </p>
-              <p
-                style={{
-                  fontSize: 12,
-                  color: "#9e9e9e",
-                  textTransform: "uppercase",
-                }}
-              >
-                {service.publico_especifico}
-              </p>
-              <p>{service.orgao_nome}</p>
-              <p
-                style={{
-                  fontSize: 12,
-                  color: "#9e9e9e",
-                  fontStyle: "italic",
-                }}
-              >
-                {new Date(service.updated_at).toLocaleDateString()}
-              </p>
-
-              {/* exibição da avaliação do serviço */}
-              <Box sx={{ mt: 1 }}>
-                <Rating
-                  name="read-only"
-                  value={+service.total_avaliacao}
-                  readOnly
-                />
-              </Box>
-            </Box>
-          ))}
+          <h3>Nenhum serviço encontrado</h3>
         </Box>
       )}
 
-      {/* // grid para exibição dos serviços em forma de tabela */}
-      {view === "list" && (
-        <CustomTable
-          theme="primary"
-          numberRowsPerPage={0}
-          progressPending={false}
-          columns={columnsGeneralColletionDetails}
-          data={newServices}
-          getRowId={(e) => {
-            router.push(`/details/${e.slug}`);
-          }}
-        />
-      )}
-
       {/* // paginação */}
-      {services.legth > 0 && (
-        <Pagination
-          currentPage={services?.page || 1}
-          totalCount={services?.total || 1}
-          pageSize={services?.pageSize || 10000}
-          onPageChange={(page) => onGetSearch(page || 1)}
-          total={services?.total || 0}
-        />
+      {!isLoading && newServices.length > 0 && (
+        <Box mt={5}>
+          <Pagination
+            currentPage={10}
+            totalCount={11}
+            pageSize={10}
+            onPageChange={(page) => refetch()}
+            total={1}
+          />
+        </Box>
       )}
     </Container>
   );

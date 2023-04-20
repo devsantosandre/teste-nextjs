@@ -5,13 +5,16 @@ import { CustomTable, TableColumn } from "@/components/Table";
 import { useStateValue } from "@/providers/StateProvider";
 import Pagination from "@/components/Pagination";
 import { useRouter } from "next/router";
-import { useSearch } from "../..";
+import { useSearch } from "../../hook";
+import { useFetchsSearch } from "../..";
 
 export const HomeContainer = () => {
   const [{ search }] = useStateValue();
   const router = useRouter();
 
-  const { handleOnSearch } = useSearch();
+  //Hooks
+  const { handleChangeOnSearch } = useSearch();
+  const { getServices } = useFetchsSearch();
 
   return (
     <Container
@@ -29,8 +32,11 @@ export const HomeContainer = () => {
       <Box sx={{ display: "flex", justifyContent: "center" }} mb={5}>
         <SearchField
           placeholder="Pesquisar"
-          onChange={handleOnSearch}
-          onClick={() => router.push(`/search/?search=${search}`)}
+          onChange={handleChangeOnSearch}
+          onClick={() => {
+            getServices({ page: 1 });
+            router.push(`/search/?search=${search}`);
+          }}
           value={search}
         />
       </Box>

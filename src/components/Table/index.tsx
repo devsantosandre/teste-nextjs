@@ -34,7 +34,7 @@ export const CustomTable: React.FC<TableCustomProps> = ({
   <DataTable
     columns={columns}
     data={data}
-    noDataComponent={'Sem dados para exibir'}
+    noDataComponent={''}
     progressPending={progressPending}
     progressComponent={<CustomLoader numberRowsPerPage={numberRowsPerPage} />}
     customStyles={schemeTheme[theme as themeProps] ?? schemeTheme.primary}
