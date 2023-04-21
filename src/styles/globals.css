@@ -35,17 +35,17 @@ p {
   }
   
   div .pagination-container > li > span:hover {
-  color: #000;
+  color: #222222;
   }
   
   div .pagination-container > li > span.previous-pagination {
   border-radius: 4px 0 0 4px;
-  color: #000;
+  color: #222222;
   }
   
   div .pagination-container > li > span.next-pagination {
   border-radius: 0px 4px 4px 0;
-  color: #000;
+  color: #222222;
   }
   
   .pagination-container > li.active > span {

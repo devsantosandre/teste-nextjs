@@ -54,27 +54,35 @@ export const SearchContainer = ({
       {/* // barra de pesquisa */}
       <Box sx={{ display: "flex", justifyContent: "left" }} mb={5}>
         <Box
-          sx={{ display: "flex", justifyContent: "center" }}
-          mb={1}
-          mr={3}
-          mt={1}
-        >
-          <img src="/images/govone-logo.png" alt="GovOne" />
-        </Box>
-        <SearchField
-          placeholder="Pesquisar"
-          onChange={handleChangeOnSearch}
-          onClick={() => {
-            refetch();
-            setOpenFilter(false);
-            dispatch({
-              type: "SET_SEARCH_URL",
-              searchUrl: search,
-            });
-            router.push(`/search/?search=${search}`);
+          // em mobile, o logo fica em cima da barra de pesquisa
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
           }}
-          value={search}
-        />
+        >
+          <Box
+            sx={{ display: "flex", justifyContent: "center" }}
+            mb={1}
+            mr={3}
+            mt={1}
+          >
+            <img src="/images/govone-logo.png" alt="GovOne" />
+          </Box>
+          <SearchField
+            placeholder="Pesquisar"
+            onChange={handleChangeOnSearch}
+            onClick={() => {
+              refetch();
+              setOpenFilter(false);
+              dispatch({
+                type: "SET_SEARCH_URL",
+                searchUrl: search,
+              });
+              router.push(`/search/?search=${search}`);
+            }}
+            value={search}
+          />
+        </Box>
         <Box
           onClick={() => setOpenFilter(!openFilter)}
           sx={{
@@ -90,6 +98,8 @@ export const SearchContainer = ({
             cursor: "pointer",
             transition: "all 0.2s ease-in-out",
             minWidth: 100,
+            height: '33px',
+            mt: 'auto',
             "&:hover": {
               backgroundColor: "#e0e0e0",
             },
@@ -204,7 +214,7 @@ export const SearchContainer = ({
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
+                gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)", sm: "repeat(2, 1fr)" },
                 gridGap: 10,
               }}
             >

@@ -29,7 +29,7 @@ export const HomeContainer = () => {
       <Box sx={{ display: "flex", justifyContent: "center" }} mb={5}>
         <img src="/images/govone-logo.png" alt="GovOne" />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }} mb={5}>
+      <Box sx={{ display: "flex", justifyContent: "center" }} mb={5}> 
         <SearchField
           placeholder="Pesquisar"
           onChange={handleChangeOnSearch}

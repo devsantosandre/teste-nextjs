@@ -39,6 +39,7 @@ const Pagination: React.FC<PaginationProps> = (props: PaginationProps) => {
   return (
     <ul className="pagination-container" style={{
       listStyleType: 'none',
+      padding: 0,
     }}>
       <li className={currentPage === 1 ? 'disabled' : ''}>
         <span

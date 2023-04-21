@@ -45,22 +45,26 @@ export const DetailsContainer = () => {
       {/* // barra de pesquisa */}
       <Box sx={{ display: "flex", justifyContent: "left" }} mb={3}>
         <Box
-          sx={{ display: "flex", justifyContent: "center" }}
-          mb={1}
-          mr={3}
-          mt={1}
+          sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
         >
-          <img src="/images/govone-logo.png" alt="GovOne" />
+          <Box
+            sx={{ display: "flex", justifyContent: "center" }}
+            mb={1}
+            mr={3}
+            mt={1}
+          >
+            <img src="/images/govone-logo.png" alt="GovOne" />
+          </Box>
+          <SearchField
+            placeholder="Pesquisar"
+            onChange={handleChangeOnSearch}
+            onClick={() => {
+              getServices({ page: 1 } as any);
+              router.push(`/search/?search=${search}`);
+            }}
+            value={search}
+          />
         </Box>
-        <SearchField
-          placeholder="Pesquisar"
-          onChange={handleChangeOnSearch}
-          onClick={() => {
-            getServices({ page: 1 } as any);
-            router.push(`/search/?search=${search}`);
-          }}
-          value={search}
-        />
       </Box>
       <Box sx={{ display: "flex", justifyContent: "left" }} mb={2}>
         <Box
@@ -91,13 +95,13 @@ export const DetailsContainer = () => {
             <CardContent>
               <Typography
                 // colocar no canto superior direito do card
-                sx={{ fontSize: 14 }}
+                sx={{ fontSize: 14, top: { xs: 30, sm: 0 } }}
                 color="text.secondary"
                 gutterBottom
                 position={"absolute"}
                 right={20}
               >
-                <b>Total de avaliação</b>
+                {/* <b>Total de avaliação</b> */}
                 <br />
                 <Rating
                   name="read-only"
@@ -167,20 +171,23 @@ export const DetailsContainer = () => {
               <br />
               <Typography>
                 <b>Custos:</b>
-                <br /> {details?.custo ? 'R$ ' + details?.custo : "Não informado"}
+                <br />{" "}
+                {details?.custo ? "R$ " + details?.custo : "Não informado"}
               </Typography>
               <br />
               <Typography>
                 <b>Jornada do serviço:</b>
                 <br />{" "}
-                {details?.jornada.length > 0 ? details?.jornada?.map((item: any) => {
-                  // Não renderiza virgula no ultimo item
-                  if (item === details?.servicosUnidade?.length - 1) {
-                    return item.titulo;
-                  } else {
-                    return item.titulo + ", ";
-                  }
-                }) : "Não informado"}
+                {details?.jornada.length > 0
+                  ? details?.jornada?.map((item: any) => {
+                      // Não renderiza virgula no ultimo item
+                      if (item === details?.servicosUnidade?.length - 1) {
+                        return item.titulo;
+                      } else {
+                        return item.titulo + ", ";
+                      }
+                    })
+                  : "Não informado"}
               </Typography>
               <br />
               <Typography>
