@@ -1,13 +1,13 @@
 import { apisiseci } from "@/services/api";
 
 interface DetailsProps {
-  total_avaliacao: any;
+  total_avaliacao: number;
   orgao_nome: string;
   orgao_sigla: string;
   categoria_nome: string;
   publico_especifico: string;
   descricao: string | TrustedHTML;
-  agendavel: any;
+  agendavel: boolean;
   requisitos: string | TrustedHTML;
   publico: string | TrustedHTML;
   tempo_total: string;

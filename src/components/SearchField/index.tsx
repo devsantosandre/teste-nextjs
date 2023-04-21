@@ -26,6 +26,9 @@ export const SearchField = ({
           display: "flex",
           alignItems: "center",
           width: 400,
+          border: "1px solid #ccc",
+          borderRadius: "12px",
+          boxShadow: "none",
         }}
       >
         <InputBase

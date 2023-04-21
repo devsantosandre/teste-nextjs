@@ -13,7 +13,7 @@ interface TablePropsCustom {
   theme?: themeProps;
 }
 
-interface TableCustomProps extends TableProps<TablePropsCustom | any> {
+interface TableCustomProps extends TableProps<TablePropsCustom> {
   numberRowsPerPage: number;
   progressPending: boolean;
   getRowId?: (row: any) => void;

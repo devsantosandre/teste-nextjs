@@ -30,9 +30,9 @@ export const DetailsContainer = () => {
   const { getDetails } = useFetchsDetails();
   const { getServices } = useFetchsSearch();
 
-  const { data, isLoading } = useQuery(["datails", slug], () => getDetails(
-    slug as string
-  ));
+  const { data, isLoading } = useQuery(["datails", slug], () =>
+    getDetails(slug as string)
+  );
 
   const details = data?.results[0];
 
@@ -62,7 +62,7 @@ export const DetailsContainer = () => {
           value={search}
         />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "left" }} mb={5}>
+      <Box sx={{ display: "flex", justifyContent: "left" }} mb={2}>
         <Box
           sx={{
             cursor: "pointer",
@@ -84,10 +84,7 @@ export const DetailsContainer = () => {
       <Box mb={10}>
         {isLoading ? (
           <>
-            <Skeleton
-              variant="rectangular"
-              height={10000}
-            />
+            <Skeleton variant="rectangular" height={10000} />
           </>
         ) : details ? (
           <Card sx={{ minWidth: 275, position: "relative" }}>
@@ -131,7 +128,7 @@ export const DetailsContainer = () => {
                   }}
                 />
               </Typography>
-              <br />
+              <Divider sx={{ my: 3 }} />
               <Typography>
                 <b>O serviço é agendável?</b>
                 <br /> {details?.agendavel ? "Sim" : "Não"}
@@ -170,20 +167,20 @@ export const DetailsContainer = () => {
               <br />
               <Typography>
                 <b>Custos:</b>
-                <br /> {details?.custo}
+                <br /> {details?.custo ? 'R$ ' + details?.custo : "Não informado"}
               </Typography>
               <br />
               <Typography>
                 <b>Jornada do serviço:</b>
                 <br />{" "}
-                {details?.jornada?.map((item: any) => {
+                {details?.jornada.length > 0 ? details?.jornada?.map((item: any) => {
                   // Não renderiza virgula no ultimo item
                   if (item === details?.servicosUnidade?.length - 1) {
                     return item.titulo;
                   } else {
                     return item.titulo + ", ";
                   }
-                })}
+                }) : "Não informado"}
               </Typography>
               <br />
               <Typography>

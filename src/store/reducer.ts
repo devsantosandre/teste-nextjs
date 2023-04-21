@@ -1,15 +1,12 @@
-// import { UserData } from "../interfaces/user";
+import { State } from "@/store/interfaces/State";
 
-interface InitState {
-  search: null;
-  searchUrl: null;
-  viewHome: "grid" | "list";
-}
+
+type InitState = State;
 
 export const initialState: InitState = {
-  search: null,
-  searchUrl: null,
-  viewHome: "grid",
+  search: "",
+  searchUrl: "",
+  viewHome: "list",
 };
 
 export const actionTypes = {
@@ -20,7 +17,7 @@ export const actionTypes = {
 
 const reducer = (
   state: any,
-  action: { type: string; search: string; searchUrl: string; viewHome: string }
+  action:  any,
 ) => {
   switch (action.type) {
     case actionTypes.SET_SEARCH:

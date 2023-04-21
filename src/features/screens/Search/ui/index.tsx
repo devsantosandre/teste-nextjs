@@ -42,9 +42,9 @@ export const SearchContainer = ({
   const router = useRouter();
   const [{ viewHome: view }, dispatch] = useStateValue();
   //Refs
-  const alphabeticalFilterRef = useRef<HTMLDivElement>(null);
-  const ratingFilterRef = useRef<HTMLDivElement>(null);
-  const lastUpdateFilterRef = useRef<HTMLDivElement>(null);
+  const alphabeticalFilterRef = useRef<HTMLSelectElement>(null);
+  const ratingFilterRef = useRef<HTMLSelectElement>(null);
+  const lastUpdateFilterRef = useRef<HTMLSelectElement>(null);
   return (
     <Container
       sx={{
@@ -269,7 +269,7 @@ export const SearchContainer = ({
               theme="primary"
               numberRowsPerPage={0}
               progressPending={false}
-              columns={columnsService}
+              columns={columnsService as any}
               data={newServices}
               getRowId={(e) => {
                 router.push(`/details/${e.slug}`);

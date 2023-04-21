@@ -1,76 +1,44 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
+import { createTheme } from '@mui/material/styles';
+const theme = createTheme({
   palette: {
-    type: 'light',
     primary: {
-      main: '#0F6FB7',
-      dark: '#0F6FB7',
+      main: '#00D082',
+      dark: '#00D082',
     },
     secondary: {
       main: '#94C120',
     },
     text: {
-      primary: '#fff',
+      primary: '#000',
     },
 
   },
-  overrides: {
-    MuiStepIcon: {
-      root: {
-        '&$active': {
-          color: '#94C120',
-        },
-        '&$completed': {
-          color: '#94C120',
-        },
-      },
-    },
-    MuiStepLabel: {
-      label: {
-        '&$active': {
-          color: '#94C120',
-        },
-        '&$completed': {
-          color: '#94C120',
-        },
-      },
-    },
-    MuiButton: {
-      outlined: {
-        borderRadius: 0,
-        padding: '8px 8px',
-        textTransform: 'none',
-      },
-    },
-  },
   typography: {
     body1: {
-      fontFamily: 'Roboto',
+      fontFamily: '__Roboto_0653ff',
       textTransform: 'none',
-      fontWeight: 'bold',
     },
     h2: {
-      fontFamily: 'Roboto',
+      fontFamily: '__Roboto_0653ff',
       fontWeight: 'bold',
       textAlign: 'center',
       textShadow: '0px 6px 14px rgba(24, 39, 75, 0.12)',
     },
     h3: {
-      fontFamily: 'Roboto',
+      fontFamily: '__Roboto_0653ff',
 
     },
     h4: {
-      fontFamily: 'Roboto',
+      fontFamily: '__Roboto_0653ff',
       fontWeight: 'bold',
       color: '#333333',
     },
     h5: {
-      fontFamily: 'Roboto',
+      fontFamily: '__Roboto_0653ff',
 
     },
     h6: {
-      fontFamily: 'Roboto',
+      fontFamily: '__Roboto_0653ff',
       // textTransform: 'uppercase',
       fontWeight: 'bold',
     },

@@ -29,11 +29,11 @@ export const SearchScreen = () => {
   useLayoutEffect(() => {
     dispatch({
       type: "SET_SEARCH_URL",
-      searchUrl: router.query.search as string,
+      searchUrl: router.query.search,
     });
     dispatch({
       type: "SET_SEARCH",
-      search: router.query.search as string,
+      search: router.query.search,
     });
   }, [router.query.search, dispatch]);
 

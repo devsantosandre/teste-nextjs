@@ -10,7 +10,7 @@ import { ReactNode } from "react";
 interface SelectProps {
   label: string;
   id: string;
-  refer: any;
+  refer: React.RefObject<HTMLSelectElement>;
   onChange: (event: SelectChangeEvent<unknown>, child: ReactNode) => void;
   options: {
     value: string;

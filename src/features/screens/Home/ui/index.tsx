@@ -34,7 +34,7 @@ export const HomeContainer = () => {
           placeholder="Pesquisar"
           onChange={handleChangeOnSearch}
           onClick={() => {
-            getServices({ page: 1 });
+            getServices({ page: 1 } as any);
             router.push(`/search/?search=${search}`);
           }}
           value={search}
