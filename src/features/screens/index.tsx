@@ -19,7 +19,7 @@ export const useFetchsSearch = () => {
 
   const getServices = async ({ page = 1, search }: { page: number, search: string }) => {
     const response = await apisiseci.get(
-      `https://sgservicos-master.govone.digital/api/cms/servicos/?ativo=true${
+      `/cms/servicos/?ativo=true${
         !!search ? "&search=" + search : ""
       }${!!page ? "&page=" + page : ""}`
     );

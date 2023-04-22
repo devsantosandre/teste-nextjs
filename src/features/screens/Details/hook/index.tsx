@@ -32,7 +32,7 @@ export const useFetchsDetails = () => {
 
   const getDetails = async (slug = ''): Promise<DetailsProps> => {
     const response = await apisiseci.get(
-      `https://sgservicos-master.govone.digital/api/cms/servicos/?slug=${slug}`
+      `/cms/servicos/?slug=${slug}`
     );
     return response.data as DetailsProps;
   };

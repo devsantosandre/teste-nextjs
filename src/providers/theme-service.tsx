@@ -15,30 +15,30 @@ const theme = createTheme({
   },
   typography: {
     body1: {
-      fontFamily: '__Roboto_0653ff',
+      // fontFamily: 'Roboto',
       textTransform: 'none',
     },
     h2: {
-      fontFamily: '__Roboto_0653ff',
+      // fontFamily: 'Roboto',
       fontWeight: 'bold',
       textAlign: 'center',
       textShadow: '0px 6px 14px rgba(24, 39, 75, 0.12)',
     },
     h3: {
-      fontFamily: '__Roboto_0653ff',
+      // fontFamily: 'Roboto',
 
     },
     h4: {
-      fontFamily: '__Roboto_0653ff',
+      // fontFamily: 'Roboto',
       fontWeight: 'bold',
       color: '#333333',
     },
     h5: {
-      fontFamily: '__Roboto_0653ff',
+      // fontFamily: 'Roboto',
 
     },
     h6: {
-      fontFamily: '__Roboto_0653ff',
+      // fontFamily: 'Roboto',
       // textTransform: 'uppercase',
       fontWeight: 'bold',
     },
