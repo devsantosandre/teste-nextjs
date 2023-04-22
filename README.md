@@ -1,14 +1,14 @@
 # Nome do Projeto
 
-##Descrição
+## Descrição
 Este é um projeto de demonstração de uma pesquisa simples, mas bastante performática, que utiliza a API da OneGov. Além disso, o projeto utiliza cacheamento inteligente para melhorar a eficiência da pesquisa.
 
-##Tecnologias Utilizadas
--Next.js
--React
--Context API
--React-query
--Material-UI
+## Tecnologias Utilizadas
+- Next.js
+- React
+- Context API
+- React-query
+- Material-UI
 
 ## Como Utilizar
 1. Certifique-se de ter o Node.js e o NPM instalados em sua máquina.
