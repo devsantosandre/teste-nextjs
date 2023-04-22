@@ -70,5 +70,5 @@ Além das funcionalidades mencionadas anteriormente, é importante destacar que 
 
 Ademais, para a estilização, foi utilizado o Material-UI como base, mas também foram desenvolvidos estilos próprios, visando uma aparência mais agradável e coerente com a identidade visual do projeto. Tudo isso com o objetivo de criar uma experiência de usuário que fosse intuitiva, agradável e satisfatória.
 
-##Contribuição
+## Contribuição
 Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir uma Issue ou enviar um Pull Request para este repositório.
